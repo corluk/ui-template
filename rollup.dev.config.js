@@ -1,17 +1,10 @@
 import serve from "rollup-plugin-serve" 
 import typescript from "rollup-plugin-typescript" 
 import css from "rollup-plugin-import-css"
-
-export default {
-    input : "./src/index.dev.tsx", 
-    output : {
-        file : "dist/index.js",
-        format : "cjs" ,
-         
-    },
-    plugins :[serve({
-        contentBase : ["public","dist"]
-    }),typescript(),css()],
-
-    
-}
+import Defaults from "./rollup.config"
+const plugins = [serve({
+    contentBase : ["public","dist"]
+}),typescript(),css()]
+const Merged = {...Defaults , ...{plugins: plugins}}
+ 
+export default  Merged

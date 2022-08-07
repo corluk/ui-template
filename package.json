@@ -1,0 +1,44 @@
+{
+  "name": "ui-template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "osman corluk <corluk@hotmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@testing-library/react": "^13.3.0",
+    "@types/jest": "^28.1.6",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@types/react-router-dom": "^5.3.3",
+    "autoprefixer": "^10.4.8",
+    "concurrently": "^7.3.0",
+    "dotenv": "^16.0.1",
+    "jest": "^28.1.3",
+    "json-server": "^0.17.0",
+    "msw": "^0.44.2",
+    "postcss": "^8.4.16",
+    "rollup": "^2.77.2",
+    "rollup-plugin-import-css": "^3.0.3",
+    "rollup-plugin-serve": "^2.0.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "tailwindcss": "^3.1.8",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4"
+  },
+  "scripts": {
+    "json:server" : "node_modules/.bin/json-server --watch test/resources/db.json --port 5000 --routes test/resources/routes.json", 
+    "dev": "NODE_ENV=development node_modules/.bin/rollup -c rollup.dev.config.js -w ",
+    "compile": "node_modules/.bin/tsc",
+    "build": "node_modules/.bin/rollup -c  rollup.prod.config.js",
+    "test": "node_modules/.bin/ts-jest"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.3",
+    "dotenv": "^16.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0"
+  }
+}

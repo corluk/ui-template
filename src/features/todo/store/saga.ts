@@ -1,31 +1,42 @@
 import { PayloadAction } from "@reduxjs/toolkit"
 import {take, takeEvery,call, put } from "redux-saga/effects"
 import { addTodo , setStatus, Todo } from "./slice"
-import {  ApiExpose }  from "./api"
+import PubSub, { IPubSub }  from "./api"
  
-
-export const SagaWrapper =  (api:  ApiExpose  )=> {
+import {get} from "idb-keyval"
+ 
     
-   
-   function* saveSaga(action : PayloadAction<Todo>): Generator<any ,any ,Todo>{
+interface IFilterTodos {
+    title : string 
+
+}
+function filterTodos(action : <PayloadAction<Fi)
+
+function* saveTodo(action : PayloadAction<Todo>): Generator<any ,any ,Todo>{
 
     try {
-        const  response = yield call(api.EditProducer,action.payload) 
+
+        const json = JSON.stringify(action.payload)
+
+        const iPubSub : IPubSub<string> ={
+            Topic : "app.todos.save" ,
+            Token : get("X-AUTH"),
+            Payload : json
+        }
+        const  response = yield call(PubSub,iPubSub) 
     } catch (error) {
         put(setStatus("failed"))
     }
-   
+    
 
    }
 
    const Saga =  function* Saga(){
-        yield  takeEvery(addTodo,saveSaga)
+        yield  takeEvery(addTodo,saveTodo)
    }    
 
-
-   return Saga 
+export default Saga
     
 
 
-}
-
+ 

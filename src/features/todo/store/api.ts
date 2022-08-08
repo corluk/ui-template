@@ -1,5 +1,5 @@
 import {Todo} from "./slice"
-
+import {get} from "@corluk/ui-system/src/registry"
 export interface ApiProps {
 
     ProducerEndPoint : string
@@ -12,7 +12,7 @@ export interface Event {
     Value : object, 
     Method : string
 }
-
+/*
 export interface ApiExpose {
 
     EditProducer : (todo:Todo)=> Promise<Todo> 
@@ -20,39 +20,38 @@ export interface ApiExpose {
     SearchConsumer :   (title : string ) => Promise<Todo[]>
 }
 export function  Api  ( props : ApiProps ) : ApiExpose{
+*/
+type STREAM = ReadableStream | XMLHttpRequestBodyInit
+export interface IPubSub<T extends STREAM> {
 
-    const produce : <T>(topic:string , body :{}) => Promise<T> = async (topic :string , body : {} = {} )=>{
+    Topic : string , 
+    Payload :T 
+}
+ export   const PubSub  = async <T extends STREAM>(props: IPubSub<T>)=>{
          
         const config : RequestInit =  {
             headers : {
                 "Content-Type" : "application/json", 
-                "X-TOPIC" : topic, 
-                "Authorization" : "Bearer" + props.JWT.toString()
+                "X-TOPIC" : props.Topic, 
+                "Authorization" : "Bearer" + get("X-AUTH")
             },
             method: "POST", 
-            body : JSON.stringify(body)  
+            body : props.Payload  
         }
         
-        const response = await fetch(props.ProducerEndPoint, config )
+        const response = await fetch("/api/todos/broker", config )
         if (! response.ok){
             throw new Error("response not ok : " + response.statusText)
         }
         return response.json() 
-    }
-    const consume =  async (url : URL)=>{
-
-        const response = await fetch(url, {
-            method : "GET" , 
-            headers: {
-                "Authorization" : "Bearer" + props.JWT.toString()
-            }
-        })
-        if(! response.ok){
-            throw new Error("response error : " + response.statusText  )
-        }
-        return response.json()
-        
-    }
+}
+/*
+export interface IConsume  {
+    Topic : string 
+    Token :string  
+    Params : ReadableStream 
+}
+ 
     const EditProducer = async (todo : Todo)=>{
 
        
@@ -74,14 +73,9 @@ export function  Api  ( props : ApiProps ) : ApiExpose{
         const data = await  consume(uri)
         return data as Promise<Todo[]>
 
-    }
-
-    return {
-        SearchConsumer, 
-        EditProducer,
-        DeleteProducer 
+    }name
+name 
     }
 }
- 
-
-export type  ApiType = typeof Api 
+ */
+export  default PubSub

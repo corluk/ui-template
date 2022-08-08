@@ -5,11 +5,18 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
      
     mode : "development",
-    entry  : "./src/index.tsx" ,
+    entry  :  {
+        index : {
+            
+           import  : "./src/index.tsx",
+           dependOn : "shared"
+        },
+        shared: [ "@reduxjs/toolkit" ,"react"  , "react-redux"]
+    }  ,
     
     output: {
         path: path.resolve(__dirname, './public'),
-        filename: 'bundle.js',
+        filename: '[name].js',
       },
       plugins: [new HtmlWebpackPlugin({
           title : "Some Text Title", 
@@ -48,7 +55,7 @@ module.exports = {
         extensions : [".js",".jsx",".ts",".tsx"], 
     },
     devtool : "eval-source-map",
-  /*  optimization: {
+    optimization: {
 
         splitChunks: {
    
@@ -57,5 +64,5 @@ module.exports = {
         },
    
       },
-   */
+   
 }

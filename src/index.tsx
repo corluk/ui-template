@@ -8,8 +8,9 @@ import {Provider} from "react-redux"
  
 const appContainer = document.createElement("div")
 const appElement = document.getElementById("app") 
-appElement?.append(appContainer)
-
-const root = ReactDOM.createPortal(<Provider store={store}>
+//appElement?.append(appContainer)
+ 
+ReactDOM.render(<Provider store={store}>
     <TodoComponent />
-    </Provider>,appContainer)
+    </Provider>,appElement) 
+//const root = ReactDOM.createPortal(

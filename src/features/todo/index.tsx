@@ -1,7 +1,7 @@
 import React from "react" 
 
 interface Props {
-    ApiUrl : string 
+    
 }
 export default (props :Props )=>{
 

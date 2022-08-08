@@ -5,6 +5,6 @@ import Defaults from "./rollup.config"
 const plugins = [serve({
     contentBase : ["public","dist"]
 }),typescript(),css()]
-const Merged = {...Defaults , ...{plugins: plugins}}
+const Merged = {...Defaults , ...{plugins: plugins,sourcemap:true}}
  
 export default  Merged

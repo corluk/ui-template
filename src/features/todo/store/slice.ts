@@ -1,16 +1,17 @@
 import {createAsyncThunk, createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit"
 
-interface  Todo  {
+export interface  Todo  {
     title: string , 
     completed : boolean , 
     id : number 
 
 }
+export type StatusType = "idle" | "loading" | "failed"
 interface  TodoState {
     todos : Todo[]
     selected : Todo | null ,
     errors : Error[] 
-    status : "idle" | "loading" | "failed"
+    status : StatusType
 }
 const initialState : TodoState= {
 
@@ -19,14 +20,13 @@ const initialState : TodoState= {
     errors :  [],
     status  : "idle"
 }
-interface Event {
+export interface Event {
     Key : string ,
     Value : object, 
     Timestamp : Date
 }
-const TodoSlice = (baseURL : string )=>{
-
-
+ 
+   /*
     const Producer = createAsyncThunk("todos/producer" , async (event:Event)=>{
 
 
@@ -45,6 +45,25 @@ const TodoSlice = (baseURL : string )=>{
 
 
     })
+const saveTodo = createAsyncThunk("todo/save" , async(todo : Todo)=>{
+
+        const uri = baseURL + "/api/todo" 
+        const response = await fetch(uri,{
+            headers : defaultHeaders , 
+            body : JSON.stringify(todo)
+        })
+        return await response.json()
+
+})
+
+const getTodos = createAsyncThunk("todos/get" , async (page: Number = 1 )=>{
+
+
+
+})
+const deleteTodo = createAsyncThunk("todo/delete", async()=>{
+
+})
 const asyncAdd = createAsyncThunk("todos/asyncAdd",async (todo:Todo)=>{
 
         
@@ -73,7 +92,7 @@ const deleteAsync = createAsyncThunk("todos/delete" , async (id: number,thunkApi
     await thunkApi.dispatch(Producer)
 })
 
-
+*/
  
 const Slice = createSlice({
     name: "todos", 
@@ -82,11 +101,21 @@ const Slice = createSlice({
         addTodo : (state,action : PayloadAction<Todo>)=>{
             state.todos = [...state.todos , action.payload]
         },
-        deleteTodo : (state , action : PayloadAction<number>)=>{
+        removeTodo : (state , action : PayloadAction<number>)=>{
 
-            const index = state.todos.findIndex
-        }
-    },
+            const index = state.todos.findIndex(todo => todo.id = action.payload)
+            state.todos = [...state.todos.slice(0,index),...state.todos.slice(index+1)]
+        },
+        setStatus : (state , action: PayloadAction<StatusType>)=>{
+            state.status = action.payload 
+        }, 
+        setError : (state , action : PayloadAction<Error>)=>{
+            state.status = "failed" 
+            state.errors = [...state.errors , action.payload]
+        }   
+
+    }
+    /*
     extraReducers : (builder)=>{
         builder
         .addCase(Producer.pending,(state,action)=>{
@@ -104,9 +133,10 @@ const Slice = createSlice({
             state.status = "idle" 
             
         })
-        
-    }
+        */
+    
 })
 
 
-}
+export  const {addTodo,removeTodo , setStatus} = Slice.actions
+export default Slice.reducer

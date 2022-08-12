@@ -1,5 +1,5 @@
 import {Todo} from "./slice"
-
+import axios  from "axios"
 export interface ApiProps {
 
     ProducerEndPoint : string
@@ -13,75 +13,33 @@ export interface Event {
     Method : string
 }
 
-export interface ApiExpose {
+ 
+ 
 
-    EditProducer : (todo:Todo)=> Promise<Todo> 
-    DeleteProducer : (todo:Todo) => Promise<number>
-    SearchConsumer :   (title : string ) => Promise<Todo[]>
-}
-export function  Api  ( props : ApiProps ) : ApiExpose{
+const Save = async (todo : Todo)=>{
 
-    const produce : <T>(topic:string , body :{}) => Promise<T> = async (topic :string , body : {} = {} )=>{
-         
-        const config : RequestInit =  {
-            headers : {
-                "Content-Type" : "application/json", 
-                "X-TOPIC" : topic, 
-                "Authorization" : "Bearer" + props.JWT.toString()
-            },
-            method: "POST", 
-            body : JSON.stringify(body)  
+    return await axios.post("/api/todos/",todo,{
+        headers:{
+            "Content-Type" : "application/json;charset=UTF-8",
+            "Accept" : "application/json"
         }
-        
-        const response = await fetch(props.ProducerEndPoint, config )
-        if (! response.ok){
-            throw new Error("response not ok : " + response.statusText)
-        }
-        return response.json() 
-    }
-    const consume =  async (url : URL)=>{
-
-        const response = await fetch(url, {
-            method : "GET" , 
-            headers: {
-                "Authorization" : "Bearer" + props.JWT.toString()
-            }
-        })
-        if(! response.ok){
-            throw new Error("response error : " + response.statusText  )
-        }
-        return response.json()
-        
-    }
-    const EditProducer = async (todo : Todo)=>{
-
-       
-        return await  produce<Todo>("app.todo.edit",todo)
-         
-    }
-
-    const DeleteProducer = async (todo : Todo)=>{
-
-         
-        return await  produce<number>("app.todo.delete", {id:todo.id})
-    }
-
-    const SearchConsumer = async (title : string )=>{
-        
-        const uri  = new URL(props.ConsumerEndPoint)
-         
-        uri.searchParams.append("title",title)
-        const data = await  consume(uri)
-        return data as Promise<Todo[]>
-
-    }
-
-    return {
-        SearchConsumer, 
-        EditProducer,
-        DeleteProducer 
-    }
+    })
 }
  
 
-export type  ApiType = typeof Api 
+const Read = async (id: string )=>{
+
+    return await axios.get("/api/todos/"+id,{
+        headers : {
+            "Content-Type" : "application/json;charset=UTF-8",
+            "Accept" : "application/json"
+        }
+    })
+     
+}
+
+const Delete = async ()=>{
+
+    axios.delete("/api/todos/")
+}
+export default {Save,Delete,Read}

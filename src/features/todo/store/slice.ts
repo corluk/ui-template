@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit"
-
+import Api from "./api"
 export interface  Todo  {
     title: string , 
     completed : boolean , 
@@ -93,12 +93,18 @@ const deleteAsync = createAsyncThunk("todos/delete" , async (id: number,thunkApi
 })
 
 */
- 
+export const saveAsync = createAsyncThunk("/todos/save",async(todo:Todo , thunkApi )=>{
+
+    await Api.Save(todo)
+
+
+})
 const Slice = createSlice({
     name: "todos", 
     initialState ,
     reducers: {
         addTodo : (state,action : PayloadAction<Todo>)=>{
+            console.log("addtodo called ")
             state.todos = [...state.todos , action.payload]
         },
         removeTodo : (state , action : PayloadAction<number>)=>{
@@ -114,7 +120,19 @@ const Slice = createSlice({
             state.errors = [...state.errors , action.payload]
         }   
 
-    }
+    },
+    extraReducers:(builder) => {
+            builder.addCase(saveAsync.rejected,(state,action)=>{
+                state.status = "failed"
+            })
+            .addCase(saveAsync.fulfilled,(state,action )=>{
+                state.status = "idle", 
+                state.selected = action.payload as unknown as Todo 
+
+            }).addCase(saveAsync.pending,(state,action)=>{
+                state.status = "loading"
+            })
+    },
     /*
     extraReducers : (builder)=>{
         builder

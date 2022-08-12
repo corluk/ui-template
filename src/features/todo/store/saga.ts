@@ -1,16 +1,15 @@
 import { PayloadAction } from "@reduxjs/toolkit"
 import {take, takeEvery,call, put } from "redux-saga/effects"
 import { addTodo , setStatus, Todo } from "./slice"
-import {  ApiExpose }  from "./api"
+import Api   from "./api"
  
-
-export const SagaWrapper =  (api:  ApiExpose  )=> {
+ 
     
    
    function* saveSaga(action : PayloadAction<Todo>): Generator<any ,any ,Todo>{
 
     try {
-        const  response = yield call(api.EditProducer,action.payload) 
+        const  response = yield call(Api.Save,action.payload) 
     } catch (error) {
         put(setStatus("failed"))
     }
@@ -23,9 +22,9 @@ export const SagaWrapper =  (api:  ApiExpose  )=> {
    }    
 
 
-   return Saga 
+ 
+export default Saga 
     
 
-
-}
+ 
 

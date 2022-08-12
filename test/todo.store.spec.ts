@@ -7,7 +7,11 @@ describe("test 01",()=>{
         rest.get('http://localhost/api/todos/:id', (req, res, ctx) => {
             console.log("get called", req)
           return res(ctx.json({greeting: 'hello there'}))
-        }),
+        }), 
+        rest.post("http://localhost/api/todos",(req,res,ctx)=>{
+
+        return res(ctx.json({title:"saved " , id: 11 , completed: false }))
+        })
       )
       
       beforeAll(() => server.listen())
@@ -29,11 +33,11 @@ describe("test 01",()=>{
             id : 1, 
             title : "saved todo"
         }
-        
+    expect(store.getState().todos.status ).toEqual("idle")
        await  store.dispatch(saveAsync(newTodo))
 
         const state = store.getState() 
+        expect(state.todos.status).toEqual("completed")
         
-        expect(state.todos.todos).toContain(newTodo)
     })
 })

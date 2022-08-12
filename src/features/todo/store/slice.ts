@@ -6,7 +6,7 @@ export interface  Todo  {
     id : number 
 
 }
-export type StatusType = "idle" | "loading" | "failed"
+export type StatusType = "idle" | "loading" | "failed" | "completed"
 interface  TodoState {
     todos : Todo[]
     selected : Todo | null ,
@@ -26,76 +26,19 @@ export interface Event {
     Timestamp : Date
 }
  
-   /*
-    const Producer = createAsyncThunk("todos/producer" , async (event:Event)=>{
-
-
-        const uri = baseURL + "/events/todo" 
-        const response = await  fetch(uri,{
-            headers : {
-                "Content-Type" : "application/json",
-                "X_KEY" : event.Key,
-                "X_TIMESTAMP" : event.Timestamp.toISOString()
-            },
-            body : JSON.stringify(event.Value)
-        })
-        if (! response.ok){
-            throw new Error("response error:" + response.statusText)
-        }
-
-
-    })
-const saveTodo = createAsyncThunk("todo/save" , async(todo : Todo)=>{
-
-        const uri = baseURL + "/api/todo" 
-        const response = await fetch(uri,{
-            headers : defaultHeaders , 
-            body : JSON.stringify(todo)
-        })
-        return await response.json()
-
-})
-
-const getTodos = createAsyncThunk("todos/get" , async (page: Number = 1 )=>{
-
-
-
-})
-const deleteTodo = createAsyncThunk("todo/delete", async()=>{
-
-})
-const asyncAdd = createAsyncThunk("todos/asyncAdd",async (todo:Todo)=>{
-
-        
-        const uri = baseURL + "/api/todos" 
-        const response =  await fetch(uri , {
-            method : "POST",
-            headers : {
-                "Content-Type": "application/json"
-            
-            },
-            body : JSON.stringify(todo)
-
-        } )
-        return await response.json()
  
-})
-
-const deleteAsync = createAsyncThunk("todos/delete" , async (id: number,thunkApi)=>{
-    
-    const event : Event = {
-        Key : "app.todo.delete", 
-        Value :{id} ,
-        Timestamp: new Date() 
-
-    }
-    await thunkApi.dispatch(Producer)
-})
-
-*/
 export const saveAsync = createAsyncThunk("/todos/save",async(todo:Todo , thunkApi )=>{
 
-    await Api.Save(todo)
+    console.log("saveAsync called")
+    const response = await Api.Save(todo)
+    return response.data 
+
+})
+
+export  const fetchTodos = createAsyncThunk("/todos/fetch",async ()=>{
+
+    const response = await Api.Fetch()
+    return response.data 
 
 
 })
@@ -126,13 +69,23 @@ const Slice = createSlice({
                 state.status = "failed"
             })
             .addCase(saveAsync.fulfilled,(state,action )=>{
-                state.status = "idle", 
+                state.status = "completed", 
                 state.selected = action.payload as unknown as Todo 
 
             }).addCase(saveAsync.pending,(state,action)=>{
                 state.status = "loading"
+            }).addCase(fetchTodos.rejected,(state,action)=>{
+                state.status = "failed"
+            })
+            .addCase(fetchTodos.fulfilled,(state,action )=>{
+                state.status = "completed", 
+                state.todos = action.payload as unknown as Todo[] 
+
+            }).addCase(fetchTodos.pending,(state,action)=>{
+                state.status = "loading"
             })
     },
+    
     /*
     extraReducers : (builder)=>{
         builder

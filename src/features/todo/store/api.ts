@@ -1,9 +1,7 @@
 import {Todo} from "./slice"
-<<<<<<< HEAD
+ 
 import axios  from "axios"
-=======
-import {get} from "@corluk/ui-system/src/registry"
->>>>>>> refs/remotes/origin/master
+ 
 export interface ApiProps {
 
     ProducerEndPoint : string
@@ -16,7 +14,7 @@ export interface Event {
     Value : object, 
     Method : string
 }
-<<<<<<< HEAD
+ 
 
  
  
@@ -30,9 +28,9 @@ const Save = async (todo : Todo)=>{
         }
     })
 }
+
  
-=======
-/*
+  /*
 export interface ApiExpose {
 
     EditProducer : (todo:Todo)=> Promise<Todo> 
@@ -40,7 +38,7 @@ export interface ApiExpose {
     SearchConsumer :   (title : string ) => Promise<Todo[]>
 }
 export function  Api  ( props : ApiProps ) : ApiExpose{
-*/
+
 type STREAM = ReadableStream | XMLHttpRequestBodyInit
 export interface IPubSub<T extends STREAM> {
 
@@ -80,7 +78,7 @@ export interface IConsume  {
     }
 
     const DeleteProducer = async (todo : Todo)=>{
->>>>>>> refs/remotes/origin/master
+ */
 
 const Read = async (id: string )=>{
 
@@ -92,18 +90,22 @@ const Read = async (id: string )=>{
     })
      
 }
+export const Fetch = async ()=>{
 
-<<<<<<< HEAD
+
+    return axios.get("/api/todos",{
+        headers : {
+            "Content-Type" : "application/json;charset=UTF-8",
+            "Accept" : "application/json"
+        }
+    }) 
+}
+ 
 const Delete = async ()=>{
 
     axios.delete("/api/todos/")
 }
-export default {Save,Delete,Read}
-=======
-    }name
-name 
-    }
-}
- */
-export  default PubSub
->>>>>>> refs/remotes/origin/master
+export default {Save,Delete,Read,Fetch }
+ 
+ 
+ 

@@ -1,8 +1,8 @@
 import { PayloadAction } from "@reduxjs/toolkit"
 import {take, takeEvery,call, put } from "redux-saga/effects"
 import { addTodo , setStatus, Todo } from "./slice"
- 
- 
+import Api from "./api"
+
     
 interface IFilterTodos {
     title : string 
@@ -17,14 +17,7 @@ function* saveTodo(action : PayloadAction<Todo>): Generator<any ,any ,Todo>{
         const  response = yield call(Api.Save,action.payload) 
  
 
-        const json = JSON.stringify(action.payload)
-
-        const iPubSub : IPubSub<string> ={
-            Topic : "app.todos.save" ,
-            Token : get("X-AUTH"),
-            Payload : json
-        }
-        const  response = yield call(PubSub,iPubSub) 
+        
  
     } catch (error) {
         put(setStatus("failed"))

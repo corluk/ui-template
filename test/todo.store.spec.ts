@@ -1,5 +1,6 @@
 import store from "../src/store" 
-import { addTodo , saveAsync } from "../src/features/todo/store/slice"
+import { Todo } from "../src/features/todo/store/slice"
+import { addTodo , saveAsync , fetchTodos } from "../src/features/todo/store/slice"
 import {rest} from 'msw'
 import {setupServer} from 'msw/node'
 describe("test 01",()=>{
@@ -8,6 +9,20 @@ describe("test 01",()=>{
             console.log("get called", req)
           return res(ctx.json({greeting: 'hello there'}))
         }), 
+        rest.get("http://localhost/api/todos",(req,res,ctx)=>{
+
+            const todos : Todo[] = []
+            for(let i = 0 ; i != 10 ; i++){
+                const todo : Todo = {
+                    id : i , 
+                    title : "todo number : " + i ,
+                    completed : false 
+                }
+                    todos.push(todo)
+
+            }
+            return res(ctx.json(todos))
+        }),
         rest.post("http://localhost/api/todos",(req,res,ctx)=>{
 
         return res(ctx.json({title:"saved " , id: 11 , completed: false }))
@@ -40,4 +55,14 @@ describe("test 01",()=>{
         expect(state.todos.status).toEqual("completed")
         
     })
+    it("should return at least 5 object  ", async ()=>{
+        
+     
+       await  store.dispatch(fetchTodos())
+
+        const state = store.getState() 
+        expect(state.todos.status).toEqual("completed")
+        expect(state.todos.todos.length).toBeGreaterThan(4)
+    })
+    
 })

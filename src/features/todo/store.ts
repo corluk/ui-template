@@ -1,14 +1,15 @@
 import create from "zustand/react"; 
 import axios from "axios";
-interface List {
+import React from "react"
+interface Todo  {
     title : string 
 }
 
 export interface ITodoState {
-    list : List[]
+    list : Todo[]
     loading : boolean
 }
-export default create<ITodoState>((set)=>({
+const useTodo = create<ITodoState>((set)=>({
 
     list : [] ,
     loading: false, 
@@ -28,3 +29,5 @@ export default create<ITodoState>((set)=>({
     }
 
 })) 
+
+export {useTodo}

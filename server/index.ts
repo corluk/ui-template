@@ -1,16 +1,6 @@
-import Fastify from "fastify" 
-import FastifyStatic from "fastify-static"
-import {resolve} from "path"
-const fastify = Fastify({
-    logger: true 
-})
+import app from "./app" 
 
-fastify.register(FastifyStatic.default,{
-    root : resolve(__dirname , "..", "public")
-})
 
-fastify.get("/",()=>{
-
-    return send()
-
+app.listen(3000 , ()=>{
+    console.log("listening 3000")
 })

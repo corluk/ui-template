@@ -1,3 +1,4 @@
 {
-    "editor.multiCursorModifier": "ctrlCmd"
+    "editor.multiCursorModifier": "ctrlCmd",
+    "files.simpleDialog.enable" : true
 }

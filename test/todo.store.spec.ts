@@ -1,6 +1,5 @@
 import store from "../src/store" 
-import { Todo } from "../src/features/todo/store/slice"
-import { addTodo , saveAsync , fetchTodos } from "../src/features/todo/store/slice"
+import Server from "../server"
 import {rest} from 'msw'
 import {setupServer} from 'msw/node'
 describe("test 01",()=>{
@@ -55,6 +54,7 @@ describe("test 01",()=>{
         expect(state.todos.status).toEqual("completed")
         
     })
+  
     it("should return at least 5 object  ", async ()=>{
         
      

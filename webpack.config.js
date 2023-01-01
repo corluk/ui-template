@@ -12,7 +12,8 @@ module.exports = {
         path: path.resolve(__dirname, './public'),
         filename: 'bundle.js',
       },
-      plugins: [new HtmlWebpackPlugin({
+      /*
+    plugins: [new HtmlWebpackPlugin({
           title : "Some Text Title", 
           template : "./public/index.html"
       }) ,
@@ -30,6 +31,7 @@ module.exports = {
         allowedHosts : "all"
 
       },
+      */
     module : {
         rules : [{
           test : /\.tsx?/, 
@@ -48,7 +50,7 @@ module.exports = {
     resolve :  {
         extensions : [".js",".jsx",".ts",".tsx"], 
     },
-    devtool : "eval-source-map",
+  // devtool : "eval-source-map",
   /*  optimization: {
 
         splitChunks: {

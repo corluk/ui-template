@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit"
 import createSagaMiddleware from "redux-saga"
-import TodoReducer from "../features/todo/store/slice"
+import TodoReducer from "../../features/todo/__trash/store/slice"
  
-import TodoSaga  from "../features/todo/store/saga"
+import TodoSaga  from "../../features/todo/__trash/store/saga"
  
 
  
@@ -14,7 +14,7 @@ const store = configureStore({
     }, 
     middleware : (getDefaultMiddleware)=>{
 
-        return getDefaultMiddleware().concat([sagaMiddleWare])    }
+        return getDefaultMiddleware().concat([sagaMiddleWare])}
 })
 
 sagaMiddleWare.run(TodoSaga)

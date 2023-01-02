@@ -1,7 +1,6 @@
-import { ITodoState } from './store';
-import atom from "jotai"
+import create from "zustand/react"; 
 import axios from "axios";
- 
+import React from "react"
 interface Todo  {
     title : string 
 }
@@ -10,8 +9,6 @@ export interface ITodoState {
     list : Todo[]
     loading : boolean
 }
-
-const todoAtom = atom<ITodoState>({list:[],loading:false})
 const useTodo = create<ITodoState>((set)=>({
 
     list : [] ,

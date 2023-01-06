@@ -3,17 +3,16 @@ import ReactDOM from "react-dom"
 //import TodoComponent from "./features/todo/todo_component"
 import "./index.css"
 import AppComponent from "./app"
+import { createRoot } from 'react-dom/client';
 //import store from "./store"
 //import {Provider} from "react-redux"
 
  
-const appContainer = document.createElement("div")
-const appElement = document.getElementById("app") 
-appElement?.append(appContainer)
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-ReactDOM.render( 
-    <AppComponent />
-    ,appElement) 
+ 
+const appElement = document.getElementById("app")
+ 
+const root = createRoot(appElement!)
+root.render(<AppComponent />)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+ 
 
 //const root = ReactDOM.createPortal(

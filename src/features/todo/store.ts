@@ -1,5 +1,5 @@
-import { ITodoState } from './store';
-import atom from "jotai"
+ 
+import {atom, Getter, Setter} from "jotai"
 import axios from "axios";
  
 interface Todo  {
@@ -12,6 +12,13 @@ export interface ITodoState {
 }
 
 const todoAtom = atom<ITodoState>({list:[],loading:false})
+const addTodo = atom((get : Getter) => {
+  return   get(todoAtom)
+},(get :Getter, set : Setter,newTodo : Todo )=>{
+    let todoState = get(todoAtom) 
+    todoState.list.push(newTodo)
+})
+/*
 const useTodo = create<ITodoState>((set)=>({
 
     list : [] ,
@@ -32,5 +39,6 @@ const useTodo = create<ITodoState>((set)=>({
     }
 
 })) 
+*/
 
-export {useTodo}
+export {todoAtom,addTodo}

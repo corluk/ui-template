@@ -1,11 +1,27 @@
-import React from "react" 
-import   {ITodoState , useTodo } from "./store"
+import { useAtom } from "jotai"
+import React, { useState } from "react" 
+import   {ITodoState , todoAtom, addTodo  } from "./store"
+
 interface Props {
     
 }
 export default (props :Props )=>{
+    const [todoState, add] = useAtom(addTodo)
 
-    const [loading , list ] = useTodo( (state : ITodoState ) =>[state.loading , state.list  ])
+    const [text,setText] = useState("")
+    //const [loading , list ] = addTodo( (state : ITodoState ) =>[state.loading , state.list  ])
 
-    return <h1 className="text-3xl font-bold underline"> TODO List Will be here </h1>
+    const items = todoState.list.map(item => <div>{item.title}</div>)
+    return <div>
+        {items}
+        <div>
+            <input type="text" value={text} onChange={(input)=> setText(input.target.value)}></input>
+            <div><button type="button" onClick={()=> {   
+                
+                add({title:text})
+                setText("")
+        }}>Ekle</button> </div>
+        </div>
+    </div>
+    
 }

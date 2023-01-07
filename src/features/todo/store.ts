@@ -2,19 +2,19 @@
 import {atom, Getter, Setter} from "jotai"
 import axios from "axios";
  
-interface Todo  {
+export interface TodoItem   {
     title : string 
 }
 
 export interface ITodoState {
-    list : Todo[]
+    list : TodoItem[]
     loading : boolean
 }
 
 const todoAtom = atom<ITodoState>({list:[],loading:false})
 const addTodo = atom((get : Getter) => {
   return   get(todoAtom)
-},(get :Getter, set : Setter,newTodo : Todo )=>{
+},(get :Getter, set : Setter,newTodo : TodoItem )=>{
     let todoState = get(todoAtom) 
     todoState.list.push(newTodo)
 })

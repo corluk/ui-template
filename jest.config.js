@@ -54,7 +54,7 @@ module.exports = {
   // fakeTimers: {
   //   "enableGlobally": false
   // },
-
+  "testEnvironment": "jsdom",
   // Force coverage collection from ignored files using an array of glob patterns
   // forceCoverageMatch: [],
 

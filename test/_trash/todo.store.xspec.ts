@@ -1,5 +1,5 @@
-import store from "../src/store" 
-import Server from "../server"
+import store from "../../src/store" 
+import Server from "../../server"
 import {rest} from 'msw'
 import {setupServer} from 'msw/node'
 describe("test 01",()=>{

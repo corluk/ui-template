@@ -36115,23 +36115,47 @@ exports.addTodo = addTodo;
 /*!**********************************************!*\
   !*** ./src/features/todo/todo_component.tsx ***!
   \**********************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const jotai_1 = __webpack_require__(/*! jotai */ "./node_modules/jotai/esm/index.js");
 const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const store_1 = __webpack_require__(/*! ./store */ "./src/features/todo/store.ts");
+const todo_item_1 = __importDefault(__webpack_require__(/*! ./todo_item */ "./src/features/todo/todo_item.tsx"));
 exports["default"] = (props) => {
     const [todoState, add] = (0, jotai_1.useAtom)(store_1.addTodo);
     const [text, setText] = (0, react_1.useState)("");
     //const [loading , list ] = addTodo( (state : ITodoState ) =>[state.loading , state.list  ])
-    const items = todoState.list.map(item => (0, jsx_runtime_1.jsx)("div", { children: item.title }));
-    return (0, jsx_runtime_1.jsxs)("div", { children: [items, (0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)("input", { type: "text", value: text, onChange: (input) => setText(input.target.value) }), (0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)("button", Object.assign({ type: "button", onClick: () => {
-                                    add({ title: text });
-                                    setText("");
-                                } }, { children: "Ekle" })), " "] })] })] });
+    const id = (0, react_1.useId)();
+    const items = todoState.list.map((item, index) => (0, jsx_runtime_1.jsx)(todo_item_1.default, { item: item }, index));
+    return (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [" ", (0, jsx_runtime_1.jsx)("ul", { children: items }, id), (0, jsx_runtime_1.jsx)("input", { type: "text", "data-testid": "test_input_txt1", value: text, onChange: (input) => setText(input.target.value) }), (0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)("button", Object.assign({ type: "button", "data-testid": "test_btn_add", onClick: () => {
+                            console.log(text);
+                            add({ title: text });
+                            setText("");
+                        } }, { children: "Ekle" })), " "] })] });
+};
+
+
+/***/ }),
+
+/***/ "./src/features/todo/todo_item.tsx":
+/*!*****************************************!*\
+  !*** ./src/features/todo/todo_item.tsx ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+exports["default"] = (props) => {
+    const id = (0, react_1.useId)();
+    return (0, jsx_runtime_1.jsx)("li", Object.assign({ "data-testid": "t_item" }, { children: props.item.title }), id);
 };
 
 

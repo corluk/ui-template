@@ -1,8 +1,8 @@
 import React , {useId} from "react";
-import {TodoItem }  from "./store"
+import  { Todo }  from "./store"
 interface  TodoItemProps {
 
-    item  : TodoItem
+    item  : Todo 
 } 
 
 
@@ -12,5 +12,6 @@ export default (props : TodoItemProps )=>{
 
     return <li key={id} data-testid="t_item">
         {props.item.title}
+        <input type="checkbox" checked={ props.item.completed } />
     </li>
 }

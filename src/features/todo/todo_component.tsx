@@ -1,4 +1,4 @@
-import { useAtom } from "jotai"
+ 
 import React, { useState , useId} from "react" 
 import { useSetRecoilState , useRecoilValue  } from "recoil"
 import TodoState, { Todo } from "./store"
@@ -6,23 +6,24 @@ import TodoState, { Todo } from "./store"
 
 //import   {ITodoState , todoAtom,  addTodo  } from "./__trash/store"
 import  TodoItemComponent from "./todo_item"
- 
+   
 interface Props {
-    
+       
 }
 export default (props :Props )=>{
     const todoList = useRecoilValue(TodoState)
     const setTodoState = useSetRecoilState(TodoState)
-    
+     
     const [text,setText] = useState("")
     const addTodo = (newTodo:Todo)=>{
 
         setTodoState(oldTodos  =>{
-
-                return [...oldTodos, newTodo]
+                let a = 1
+                let b = 2
+               return [...oldTodos, newTodo]
         })
-        
-    }
+         
+    } 
 
     //const [loading , list ] = addTodo( (state : ITodoState ) =>[state.loading , state.list  ])
     const id = useId() 
@@ -31,8 +32,8 @@ export default (props :Props )=>{
 
             {items}
     </ul>
-        
-        
+          
+         
             <input type="text" data-testid="test_input_txt1" value={text} onChange={(input)=> setText(input.target.value)}></input>
             <div><button type="button" data-testid="test_btn_add" onClick={async ()=> {   
                 console.log(text)

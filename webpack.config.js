@@ -1,5 +1,5 @@
 
-const HtmlWebpackPlugin = require("html-webpack-plugin")
+ 
 const path = require("path"); 
 const webpack = require("webpack")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -9,29 +9,12 @@ module.exports = {
     entry  : "./src/index.tsx" ,
     
     output: {
-        path: path.resolve(__dirname, './public'),
+        path: path.join(__dirname, 'lib'),
         filename: 'bundle.js',
+        clean:true,
+        publicPath:  "/"
       },
-      /*
-    plugins: [new HtmlWebpackPlugin({
-          title : "Some Text Title", 
-          template : "./public/index.html"
-      }) ,
-      new webpack.EnvironmentPlugin({
-        NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
-        DEBUG: true,
-      })//, new MiniCssExtractPlugin()
-    ],
- 
-      devServer: {
-        static: "./public",
-        compress: true,
-        port: 9000,
-        hot: true , 
-        allowedHosts : "all"
-
-      },
-      */
+    
     module : {
         rules : [{
           test : /\.tsx?/, 

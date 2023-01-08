@@ -4,7 +4,7 @@
  import userEvent from '@testing-library/user-event'
  import '@testing-library/jest-dom'
  import TodoComponent from "../src/features/todo/todo_component"
- 
+ import { RecoilRoot } from "recoil"
  
  jest.mock("axios");
 
@@ -12,7 +12,7 @@ const mockAxios   =  axios as jest.Mocked<typeof axios>
  it("test mock" , async ()=>{
   const resp = {title: "test"}
   mockAxios.get.mockResolvedValue(resp)
-    render(<TodoComponent />)
+    render(<RecoilRoot> <TodoComponent /></RecoilRoot>)
     const txt  = screen.getByTestId("test_input_txt1") 
     await userEvent.keyboard("key")
     fireEvent.change(txt,{target:{value:"test item"}})

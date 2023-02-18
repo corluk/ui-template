@@ -23,6 +23,7 @@
     "mini-css-extract-plugin": "^2.6.1",
     "postcss": "^8.4.16",
     "postcss-loader": "^7.0.1",
+    "postcss-preset-env": "^8.0.1",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.1.8",
     "ts-jest": "^28.0.7",
@@ -36,9 +37,7 @@
     "webpack-merge": "^5.8.0"
   },
   "scripts": {
- 
     "dev": "NODE_ENV=development node_modules/.bin/webpack serve   --config webpack.dev.config.js ",
-  
     "compile": "node_modules/.bin/tsc",
     "test": "jest"
   },

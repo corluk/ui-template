@@ -2,7 +2,7 @@
 import React, { useState , useId} from "react" 
 import { useSetRecoilState , useRecoilValue  } from "recoil"
 import TodoState, { Todo } from "./store"
-
+import Typography from '@mui/material/Typography';
 
 //import   {ITodoState , todoAtom,  addTodo  } from "./__trash/store"
 import  TodoItemComponent from "./todo_item"
@@ -28,7 +28,11 @@ export default (props :Props )=>{
     //const [loading , list ] = addTodo( (state : ITodoState ) =>[state.loading , state.list  ])
     const id = useId() 
     const items = todoList.map((item ,index)  => <TodoItemComponent item={item} key={index}/>)
-    return  <> <ul key={id}> 
+    return  <>
+    <div>
+        <Typography variant="h1">Hello World</Typography>
+    </div>
+     <ul key={id}> 
 
             {items}
     </ul>
